@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,11 +6,53 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/add_check_in_button"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_marginTop="16dp"
+        android:text="@string/add_check_in"
+        android:layout_weight="1"
+        android:onClick="addCheckIn"
+         />
+    <Button
+        android:id="@+id/check_in_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="@string/check_in"
+        android:onClick="checkIn" />
 
-</RelativeLayout>
+    <TextView android:id="@+id/status"
+        android:layout_height="wrap_content"
+    	android:layout_width="wrap_content"
+    	android:lines="3"
+    	android:minLines="3"
+        android:text="@string/status"/>
+    
+    <TextView android:id="@+id/start_time_label"
+        android:layout_height="wrap_content"
+    	android:layout_width="wrap_content"
+        android:text="@string/start_time"/>
+    
+    <TextView android:id="@+id/start_time"
+        android:layout_height="wrap_content"
+    	android:layout_width="wrap_content"/>
+    
+    <View
+    android:layout_width="fill_parent"
+    android:layout_height="1dp"
+    android:background="@android:color/darker_gray"/>
+    
+    <TextView android:id="@+id/total"
+        android:layout_height="wrap_content"
+    	android:layout_width="wrap_content"
+    	android:textStyle="bold"
+    	android:lines="4"
+    	android:minLines="4"
+        android:text="@string/total"/>
+    
+</LinearLayout>

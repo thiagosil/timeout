@@ -3,6 +3,16 @@
 
     <string name="app_name">Timeout</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="check_in">Check In</string>
+    <string name="check_out">Check Out</string>
+    <string name="add_check_in">Add Check In</string>
+    <string name="status">Status: Working
+Work start time: 13:35
+Time Working: 5:12</string>
+	<string name="total">Total hours
+Today:  7:05
+Week: 30:42
+Month: 100:58</string>
+	<string name="start_time">Start Time:</string>
 
 </resources>
