@@ -14,9 +14,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.thiagosil.timeout.database.DatabaseHelper;
+
 public class MainActivity extends Activity {
 
-	private Date punchInTime, punchOutTime;
+//	private Date punchInTime, punchOutTime;
+	private Shift currentShift;
 	
 	private String CHECK_IN_KEY = "checkIn", CHECK_OUT_KEY = "checkOut";
 	
@@ -36,6 +39,7 @@ public class MainActivity extends Activity {
 	}
 
 	private void initComponents() {
+		currentShift = new Shift();
 		if(isPunchedIn())
 		{
 			showCheckInTime();
@@ -62,18 +66,19 @@ public class MainActivity extends Activity {
 	}
 
 	private void checkIn(Date date) {
-		punchInTime = date;
+		currentShift.setCheckIn(date);
 		saveData(CHECK_IN_KEY, date);
 		showCheckInTime();
 		switchButton();
 	}
 
 	private void checkOut(Date date) {
-		punchOutTime = date;
+		currentShift.setCheckOut(date);
 		saveData(CHECK_OUT_KEY, date);
 		removeData(CHECK_IN_KEY);
 		showCheckInTime();
 		switchButton();
+		saveShift();
 	}
 	
 	private void showCheckInTime() {
@@ -81,16 +86,15 @@ public class MainActivity extends Activity {
 		if (isPunchedIn())
 		{
 			SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-			punchInTime= new Date(sharedPref.getLong(CHECK_IN_KEY, 0));
+			currentShift = new Shift();
+			currentShift.setCheckIn(new Date(sharedPref.getLong(CHECK_IN_KEY, 0)));
 			SimpleDateFormat dt = new SimpleDateFormat("hh:mm", java.util.Locale.getDefault()); 
-			start_time.setText(dt.format(punchInTime));
+			start_time.setText(dt.format(currentShift.getCheckIn()));
 		}
 		else
 		{
 			start_time.setText("");
 		}
-		
-		
 	}
 
 	private void saveData(String key, Date date) {
@@ -129,6 +133,14 @@ public class MainActivity extends Activity {
 			Button punchOut = (Button) findViewById(R.id.check_out_button);
 			punchOut.setVisibility(View.GONE);
 		}
+	}
+	
+	private void saveShift(){
+		DatabaseHelper db = new DatabaseHelper(this);
+		
+		db.addShift(currentShift);
+		removeData(CHECK_IN_KEY);
+		currentShift = null;
 	}
 	
 }
