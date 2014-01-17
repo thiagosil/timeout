@@ -25,6 +25,14 @@
         android:layout_weight="2"
         android:text="@string/check_in"
         android:onClick="checkIn" />
+    
+    <Button
+        android:id="@+id/check_out_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="@string/check_out"
+        android:onClick="checkOut" />
 
     <TextView android:id="@+id/status"
         android:layout_height="wrap_content"
