@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.thiagosil.timeout.database.DatabaseHelper;
 
@@ -37,6 +36,7 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
+	//Check which buttons should be shown and loads ChechIn time
 	private void initComponents() {
 		currentShift = new Shift();
 		if(isCheckedIn())
@@ -48,38 +48,29 @@ public class MainActivity extends Activity {
 
 	public void checkIn(View view){
 		checkIn(new Date());
-		Context context = getApplicationContext();
-		int duration = Toast.LENGTH_SHORT;
-		
-		Toast toast = Toast.makeText(context, R.string.check_in, duration);
-		toast.show();
 	}
 	
 	public void checkOut(View view){
 		checkOut(new Date());
-		Context context = getApplicationContext();
-		int duration = Toast.LENGTH_SHORT;
-		
-		Toast toast = Toast.makeText(context, R.string.check_out, duration);
-		toast.show();
 	}
 
 	private void checkIn(Date date) {
 		currentShift.setCheckIn(date);
-		saveData(CHECK_IN_KEY, date);
+		saveDate(CHECK_IN_KEY, date);
 		showCheckInTime();
 		switchButton();
 	}
 
 	private void checkOut(Date date) {
 		currentShift.setCheckOut(date);
-		saveData(CHECK_OUT_KEY, date);
+		saveDate(CHECK_OUT_KEY, date);
 		removeData(CHECK_IN_KEY);
 		showCheckInTime();
 		switchButton();
 		saveShift();
 	}
 	
+	//Show current checkIn time accordingly
 	private void showCheckInTime() {
 		TextView start_time = (TextView) findViewById(R.id.start_time);
 		if (isCheckedIn())
@@ -96,13 +87,15 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	private void saveData(String key, Date date) {
+	//Saves a date on the sharedPreferences file.
+	private void saveDate(String key, Date date) {
 		SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
 		Editor editor = sharedPref.edit();
 		editor.putLong(key, date.getTime());
 		editor.commit();
 	}
 	
+	//Saves a key from the the sharedPreferences file.
 	private void removeData(String key) {
 		SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
 		Editor editor = sharedPref.edit();
@@ -110,6 +103,8 @@ public class MainActivity extends Activity {
 		editor.commit();
 	}
 	
+	
+	//Verifies if the user is checked in.
 	private boolean isCheckedIn(){
 		SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
 		if (sharedPref.contains(CHECK_IN_KEY)){
@@ -118,6 +113,7 @@ public class MainActivity extends Activity {
 		return false;
 	}
 	
+	//Changes the currently displayed button given the current state of the application.
 	private void switchButton()
 	{
 		if (isCheckedIn()){
@@ -134,6 +130,7 @@ public class MainActivity extends Activity {
 		}
 	}
 	
+	//Saves the current shift to the database.
 	private void saveShift(){
 		DatabaseHelper db = new DatabaseHelper(this);
 		
