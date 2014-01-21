@@ -18,7 +18,6 @@ import com.thiagosil.timeout.database.DatabaseHelper;
 
 public class MainActivity extends Activity {
 
-//	private Date punchInTime, punchOutTime;
 	private Shift currentShift;
 	
 	private String CHECK_IN_KEY = "checkIn", CHECK_OUT_KEY = "checkOut";
@@ -40,7 +39,7 @@ public class MainActivity extends Activity {
 
 	private void initComponents() {
 		currentShift = new Shift();
-		if(isPunchedIn())
+		if(isCheckedIn())
 		{
 			showCheckInTime();
 		}
@@ -83,7 +82,7 @@ public class MainActivity extends Activity {
 	
 	private void showCheckInTime() {
 		TextView start_time = (TextView) findViewById(R.id.start_time);
-		if (isPunchedIn())
+		if (isCheckedIn())
 		{
 			SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
 			currentShift = new Shift();
@@ -111,7 +110,7 @@ public class MainActivity extends Activity {
 		editor.commit();
 	}
 	
-	private boolean isPunchedIn(){
+	private boolean isCheckedIn(){
 		SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
 		if (sharedPref.contains(CHECK_IN_KEY)){
 			return true;
@@ -121,17 +120,17 @@ public class MainActivity extends Activity {
 	
 	private void switchButton()
 	{
-		if (isPunchedIn()){
-			Button punchIn = (Button) findViewById(R.id.check_in_button);
-			punchIn.setVisibility(View.GONE);
-			Button punchOut = (Button) findViewById(R.id.check_out_button);
-			punchOut.setVisibility(View.VISIBLE);
+		if (isCheckedIn()){
+			Button checkInButton = (Button) findViewById(R.id.check_in_button);
+			checkInButton.setVisibility(View.GONE);
+			Button checkOutButton = (Button) findViewById(R.id.check_out_button);
+			checkOutButton.setVisibility(View.VISIBLE);
 		}
 		else {
-			Button punchIn = (Button) findViewById(R.id.check_in_button);
-			punchIn.setVisibility(View.VISIBLE);
-			Button punchOut = (Button) findViewById(R.id.check_out_button);
-			punchOut.setVisibility(View.GONE);
+			Button checkInButton = (Button) findViewById(R.id.check_in_button);
+			checkInButton.setVisibility(View.VISIBLE);
+			Button checkOutButton = (Button) findViewById(R.id.check_out_button);
+			checkOutButton.setVisibility(View.GONE);
 		}
 	}
 	
